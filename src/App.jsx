@@ -11,16 +11,30 @@ import Sign from "./pages/Sign";
 import SignUp from "./pages/SignUp";
 import Contact from "./pages/Contact";
 import BookAppointment from "./pages/BookAppointment";
+import Dashboard from "./pages/Dashboard";         // 👈 NEW
+import ProtectedRoute from "./components/ProtectedRoute"; // 👈 NEW
+import { useEffect } from "react";
+
 
 function App() {
-  // Create section refs for smooth scrolling
   const homeRef = useRef(null);
   const servicesRef = useRef(null);
   const doctorsRef = useRef(null);
   const aboutRef = useRef(null);
   const contactRef = useRef(null);
 
-  // Function to scroll to a section
+
+useEffect(() => {
+  const section = localStorage.getItem("scrollTo");
+  if (section && window.location.pathname === "/") {
+    setTimeout(() => {
+      scrollToSection(section);
+      localStorage.removeItem("scrollTo");
+    }, 100); // Give time for DOM to load
+  }
+}, []);
+
+
   const scrollToSection = (section) => {
     const refs = {
       home: homeRef,
@@ -47,15 +61,24 @@ function App() {
               <div ref={servicesRef}><MedicalServices /></div>
               <div ref={doctorsRef}><Doctors /></div>
               <div ref={aboutRef}><Testimonials /></div>
-              <div ref={contactRef}><Contact/></div>
+              <div ref={contactRef}><Contact /></div>
             </>
           }
         />
         <Route path="/book-appointment" element={<BookAppointment />} />
         <Route path="/signin" element={<Sign />} />
         <Route path="/signup" element={<SignUp />} />
+
+        {/* 👇 Protected route */}
+        <Route
+          path="/dashboard"
+          element={
+            <ProtectedRoute>
+              <Dashboard />
+            </ProtectedRoute>
+          }
+        />
       </Routes>
-      
       <Footer />
     </div>
   );

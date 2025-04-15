@@ -9,11 +9,11 @@ const SignUp = () => {
 
   const handleSignUp = (e) => {
     e.preventDefault();
-
-    // Save user data to localStorage
-    localStorage.setItem("user", JSON.stringify({ name, email, password }));
-    alert("Sign up successful! You can now sign in.");
-    navigate("/signin"); // Redirect to Sign In page
+    const userData = { name, email, password };
+    localStorage.setItem("user", JSON.stringify(userData));
+    localStorage.setItem("token", "fake-jwt-token");
+    alert("Sign up successful!");
+    navigate("/dashboard");
   };
 
   return (
@@ -21,30 +21,9 @@ const SignUp = () => {
       <div className="bg-white p-8 rounded-lg shadow-md w-96">
         <h2 className="text-2xl font-semibold text-gray-700 mb-6 text-center">Sign Up</h2>
         <form onSubmit={handleSignUp}>
-          <input
-            type="text"
-            placeholder="Full Name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            required
-            className="w-full p-3 border rounded-md mb-4"
-          />
-          <input
-            type="email"
-            placeholder="Email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-            className="w-full p-3 border rounded-md mb-4"
-          />
-          <input
-            type="password"
-            placeholder="Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-            className="w-full p-3 border rounded-md mb-4"
-          />
+          <input type="text" placeholder="Full Name" value={name} onChange={(e) => setName(e.target.value)} required className="w-full p-3 border rounded-md mb-4" />
+          <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} required className="w-full p-3 border rounded-md mb-4" />
+          <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} required className="w-full p-3 border rounded-md mb-4" />
           <button type="submit" className="w-full bg-primary text-white p-3 rounded-md hover:bg-purple-700">
             Sign Up
           </button>
