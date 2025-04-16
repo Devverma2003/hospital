@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, Link } from "react-router-dom";
 import logo from "../assets/NovaCarelogo.jpg";
 
 const Navbar = ({ scrollToSection }) => {
@@ -36,22 +36,29 @@ const Navbar = ({ scrollToSection }) => {
     <nav className="bg-white shadow-md py-4 fixed top-0 w-full z-10">
       <div className="container mx-auto flex justify-between items-center px-6">
         {/* Logo */}
-        <img src={logo} alt="Hospital Logo" className="w-24 rounded" />
+        <div className="cursor-pointer" onClick={() => navigate("/")}>
+          <h1 className="text-3xl font-bold text-blue-600">NovaCare</h1>
+        </div>
 
         {/* Navigation Links */}
         <ul className="hidden md:flex space-x-6 text-gray-700 font-medium">
-          <li className="cursor-pointer" onClick={() => handleScrollOrNavigate("home")}>Home</li>
-          <li className="cursor-pointer" onClick={() => handleScrollOrNavigate("services")}>Services</li>
-          <li className="cursor-pointer" onClick={() => handleScrollOrNavigate("doctors")}>Doctors</li>
-          <li className="cursor-pointer" onClick={() => handleScrollOrNavigate("about")}>About</li>
-          <li className="cursor-pointer" onClick={() => handleScrollOrNavigate("contact")}>Contact</li>
+          {["home", "services", "doctors", "about", "contact"].map((item) => (
+            <li
+              key={item}
+              className="cursor-pointer relative group text-lg capitalize transition duration-300"
+              onClick={() => handleScrollOrNavigate(item)}
+            >
+              {item.charAt(0).toUpperCase() + item.slice(1)}
+              <span className="absolute left-0 bottom-0 w-0 h-0.5 bg-blue-600 transition-all duration-300 group-hover:w-full"></span>
+            </li>
+          ))}
         </ul>
 
         {/* Auth Buttons */}
         <div className="space-x-4 flex items-center">
           {isLoggedIn ? (
             <>
-              <span className="text-primary font-medium gap-11">Welcome:  {username}</span>
+              <span className="text-primary font-medium gap-11">{username}</span>
               <button
                 onClick={handleLogout}
                 className="border border-red-500 text-red-500 px-4 py-2 rounded-md hover:bg-red-500 hover:text-white transition"

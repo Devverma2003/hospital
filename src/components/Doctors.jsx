@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import doctor1 from "../assets/johndoe.jpg";
 import doctor2 from "../assets/emily.jpg";
 import doctor3 from "../assets/micheal.jpg";
@@ -15,6 +16,11 @@ const Doctors = () => {
             <img src={doctor1} alt="Doctor 1" className="w-32 mx-auto mb-4 rounded-full" />
             <h3 className="text-xl font-semibold">Dr. John Doe</h3>
             <p className="text-gray-600 mt-2">Cardiologist</p>
+            <Link to={`/doctor/${1}`}>
+              <button className="mt-4 px-6 py-2 bg-blue-600 text-white rounded-full hover:bg-blue-700 transition-colors duration-300">
+                View Details
+              </button>
+            </Link>
           </div>
 
           {/* Doctor 2 */}
@@ -22,6 +28,11 @@ const Doctors = () => {
             <img src={doctor2} alt="Doctor 2" className="w-32 mx-auto mb-4 rounded-full" />
             <h3 className="text-xl font-semibold">Dr. Emily Smith</h3>
             <p className="text-gray-600 mt-2">Neurologist</p>
+            <Link to={`/doctor/${2}`}>
+              <button className="mt-4 px-6 py-2 bg-blue-600 text-white rounded-full hover:bg-blue-700 transition-colors duration-300">
+                View Details
+              </button>
+            </Link>
           </div>
 
           {/* Doctor 3 */}
@@ -29,6 +40,11 @@ const Doctors = () => {
             <img src={doctor3} alt="Doctor 3" className="w-32 mx-auto mb-4 rounded-full" />
             <h3 className="text-xl font-semibold">Dr. Michael Brown</h3>
             <p className="text-gray-600 mt-2">Orthopedic</p>
+            <Link to={`/doctor/${3}`}>
+              <button className="mt-4 px-6 py-2 bg-blue-600 text-white rounded-full hover:bg-blue-700 transition-colors duration-300">
+                View Details
+              </button>
+            </Link>
           </div>
         </div>
       </div>

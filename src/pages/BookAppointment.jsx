@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 
+
 const BookAppointment = () => {
   const [formData, setFormData] = useState({
     name: "",
@@ -11,23 +12,52 @@ const BookAppointment = () => {
     message: "",
   });
 
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Appointment Data:", formData);
-    alert("Your appointment has been booked!");
-    setFormData({
-      name: "",
-      email: "",
-      phone: "",
-      date: "",
-      time: "",
-      doctor: "",
-      message: "",
-    });
+    setIsSubmitting(true);
+
+    const data = {
+      access_key: "d3de43bc-83e4-4371-9b36-2976686a3e2c", // your Web3Forms API key
+      subject: "New Appointment Booking",
+      ...formData,
+    };
+
+    try {
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+
+      const result = await response.json();
+
+      if (result.success) {
+        alert("Your appointment has been booked!");
+        setFormData({
+          name: "",
+          email: "",
+          phone: "",
+          date: "",
+          time: "",
+          doctor: "",
+          message: "",
+        });
+      } else {
+        alert("Failed to book appointment. Please try again.");
+      }
+    } catch (error) {
+      alert("There was an error. Please try again later.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -101,9 +131,10 @@ const BookAppointment = () => {
           ></textarea>
           <button
             type="submit"
+            disabled={isSubmitting}
             className="bg-primary text-white w-full py-3 rounded-md hover:bg-purple-700 transition"
           >
-            Confirm Appointment
+            {isSubmitting ? "Booking..." : "Confirm Appointment"}
           </button>
         </form>
       </div>
